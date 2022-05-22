@@ -14,7 +14,7 @@ RUN useradd --system --no-create-home --uid 1000 default
 
 FROM python-base as builder-base
 RUN apt-get update \
-	&& apt-get install -y build-essential
+	&& apt-get install -y build-essential libpq-dev python-dev
 
 RUN pip install --upgrade pip && \
 	pip install poetry==$POETRY_VERSION && \

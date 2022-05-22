@@ -1,5 +1,3 @@
-from typing import List
-
 from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
@@ -10,7 +8,7 @@ from books.models import Book
 
 class BookAPITestCase(APITestCase):
     user = None
-    test_books = List[Book]
+    test_books = []  # type: list[Book]
 
     def create_test_user(self):
         if self.user is None:

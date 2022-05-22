@@ -1,6 +1,21 @@
 ---
 version: '3.6'
 services:
+  db:
+    image: postgres:14.3-alpine3.15
+    container_name: kaed_db
+    volumes:
+      - kaed_db:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=kaed
+      - POSTGRES_PASSWORD=foobar
+      - POSTGRES_DB=kaed
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+
   kaed:
     container_name: kaed
     build: ./api
@@ -11,6 +26,9 @@ services:
       - ./api/.env
     volumes:
       - statics:/app/static
+    depends_on:
+      db:
+        condition: service_healthy
 
   nginx:
     container_name: nginx
@@ -25,3 +43,4 @@ services:
 
 volumes:
   statics:
+  kaed_db:
