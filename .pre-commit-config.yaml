@@ -14,7 +14,7 @@ repos:
     hooks:
     -   id: flake8
         args: [--config, api/setup.cfg]
-        exclude: api/kaed/kaed/settings.py
+        exclude: api/kaed/settings.py
 
 -   repo: https://github.com/psf/black
     rev: 22.3.0
@@ -25,7 +25,7 @@ repos:
     rev: v0.950
     hooks:
     -   id: mypy
-        exclude: api/kaed/kaed/settings.py
+        exclude: api/kaed/settings.py
 
 -   repo: https://github.com/PyCQA/isort
     rev: 5.10.1

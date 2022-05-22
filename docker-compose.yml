@@ -1,0 +1,27 @@
+---
+version: '3.6'
+services:
+  kaed:
+    container_name: kaed
+    build: ./api
+    image: kaed
+    user: "1000:1000"
+    restart: unless-stopped
+    env_file:
+      - ./api/.env
+    volumes:
+      - statics:/app/static
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    image: nginx-kaed
+    ports:
+      - 8000:80
+    volumes:
+      - statics:/app/static
+    depends_on:
+      - kaed
+
+volumes:
+  statics:

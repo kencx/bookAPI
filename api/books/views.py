@@ -1,8 +1,9 @@
+from django.contrib.auth.models import User
+from rest_framework import generics, permissions, viewsets
+
 from books.models import Book
 from books.permissions import IsOwnerOrReadOnly
 from books.serializers import BookSerializer, UserSerializer
-from django.contrib.auth.models import User
-from rest_framework import generics, permissions, viewsets
 
 
 class BookViewSet(viewsets.ModelViewSet):

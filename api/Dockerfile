@@ -26,10 +26,10 @@ RUN poetry install --no-dev --no-ansi --no-interaction
 
 FROM python-base as final
 COPY --from=builder-base $VENV_PATH $VENV_PATH
-COPY ./kaed /app
+COPY . /app
 WORKDIR /app
+RUN python manage.py collectstatic --noinput
 
-COPY ./entrypoint.sh ./
 RUN chmod +x ./entrypoint.sh
 
 USER 1000:1000
