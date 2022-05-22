@@ -1,7 +1,16 @@
 ## kaed
 
-Simple CRUD API for books.
+A simple CRUD API for books, built with Django REST Framework and runs with
+postgres, nginx and gunicorn.
 
-## Run
+## Development
 
-The django REST API is run with postgres, nginx and gunicorn.
+Dependencies
+- Python 3.9
+- poetry
+
+```bash
+$ pip install poetry
+$ poetry install
+$ poetry run python manage.py runserver
+```

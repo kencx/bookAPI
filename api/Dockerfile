@@ -14,7 +14,7 @@ RUN useradd --system --no-create-home --uid 1000 default
 
 FROM python-base as builder-base
 RUN apt-get update \
-	&& apt-get install -y build-essential libpq-dev python-dev
+	&& apt-get install -y --no-install-recommends build-essential libpq-dev
 
 RUN pip install --upgrade pip && \
 	pip install poetry==$POETRY_VERSION && \
@@ -25,6 +25,11 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry install --no-dev --no-ansi --no-interaction
 
 FROM python-base as final
+RUN apt-get update \
+	&& apt-get install --no-install-recommends -y libpq-dev \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/* /usr/share/doc/ /usr/share/man
+
 COPY --from=builder-base $VENV_PATH $VENV_PATH
 COPY . /app
 WORKDIR /app
