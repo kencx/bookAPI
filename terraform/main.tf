@@ -36,6 +36,13 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+data "template_file" "user_data" {
+  template = file("./install-docker.tpl")
+  vars = {
+    compose_version = var.compose_version
+  }
+}
+
 resource "aws_instance" "instance" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = var.instance_type
@@ -43,6 +50,7 @@ resource "aws_instance" "instance" {
   subnet_id                   = aws_subnet.public.id
   vpc_security_group_ids      = [aws_security_group.public.id]
   key_name                    = var.ec2_key_name
+  user_data                   = data.template_file.user_data.rendered
 }
 
 resource "aws_db_instance" "postgres" {

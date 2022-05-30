@@ -45,3 +45,9 @@ variable "public_ingress_ports" {
   description = "List of public ingress ports"
   default     = [22, 80, 443]
 }
+
+variable "compose_version" {
+  type        = string
+  description = "Docker Compose version"
+  default     = "v2.5.1"
+}
